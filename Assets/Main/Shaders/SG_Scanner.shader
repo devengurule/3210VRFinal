@@ -5,6 +5,10 @@ Shader "Custom/SG_Scanner"
     {
         [MainColor] _BaseColor("Base Color", Color) = (1, 1, 1, 1)
         [MainTexture] _BaseMap("Base Map", 2D) = "white" {}
+
+        _ScannerPosition("Scanner Position", Vector) = (0, 0, 0, 0)
+        _Radius("Scanner Radius", Float) = 1.5
+        _Softness("Scanner Softness", Float) = 0.25
     }
 
     SubShader
@@ -46,13 +50,15 @@ Shader "Custom/SG_Scanner"
             SAMPLER(sampler_BaseMap);
 
             CBUFFER_START(UnityPerMaterial)
+
                 half4 _BaseColor;
                 float4 _BaseMap_ST;
-            CBUFFER_END
 
-            float3 _LightPosition;
-            float _Radius;
-            float _Softness;
+                float4 _ScannerPosition;
+                float _Radius;
+                float _Softness;
+
+            CBUFFER_END
 
             Varyings vert(Attributes IN)
             {
@@ -71,28 +77,36 @@ Shader "Custom/SG_Scanner"
 
             half4 frag(Varyings IN) : SV_Target
             {
-                half4 color =
-                    SAMPLE_TEXTURE2D(
-                        _BaseMap,
-                        sampler_BaseMap,
-                        IN.uv
-                    ) * _BaseColor;
+                half4 color = SAMPLE_TEXTURE2D(
+                    _BaseMap,
+                    sampler_BaseMap,
+                    IN.uv
+                ) * _BaseColor;
 
-                float distanceToLight =
-    distance(IN.positionWS, _LightPosition);
-    
+                // Calculate world-space distance from scanner.
+                float distanceToScanner = distance(
+                    IN.positionWS,
+                    _ScannerPosition.xyz
+                );
 
-// Fully visible inside the inner radius
-float innerRadius = _Radius - _Softness;
+                // Calculate inner and outer radius.
+                float innerRadius = max(
+                    0.0,
+                    _Radius - _Softness
+                );
 
-// Smoothly fade between inner radius and outer radius
-float reveal = saturate(
-    (_Radius - distanceToLight) / max(_Softness, 0.001)
-);
+                float outerRadius = _Radius + _Softness;
 
-reveal = smoothstep(1.0, 0.0, reveal);
+                // Inside the scanner radius = invisible.
+                // Outside the scanner radius = visible.
+                float visibility = smoothstep(
+                    innerRadius,
+                    max(outerRadius, innerRadius + 0.001),
+                    distanceToScanner
+                );
 
-color.a *= reveal;
+                // Apply visibility to alpha.
+                color.a *= visibility;
 
                 return color;
             }
