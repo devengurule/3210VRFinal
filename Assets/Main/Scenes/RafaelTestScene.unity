@@ -1179,6 +1179,7 @@ GameObject:
   - component: {fileID: 1554455444}
   - component: {fileID: 1554455443}
   - component: {fileID: 1554455442}
+  - component: {fileID: 1554455445}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -1251,7 +1252,19 @@ MonoBehaviour:
       m_Calls: []
   m_Activated:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1554455445}
+        m_TargetAssemblyTypeName: GunFireScript, Assembly-CSharp
+        m_MethodName: FireBullet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Deactivated:
     m_PersistentCalls:
       m_Calls: []
@@ -1362,6 +1375,22 @@ Transform:
   - {fileID: 1950563752}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &1554455445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554455441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ca35f88ab242848bfcbe27bb5f0e5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GunFireScript
+  bulletPrefab: {fileID: 2709233171168157176, guid: 736d2ab5c14e96a4c80f6305a9125e90, type: 3}
+  bulletSpawnPoint: {fileID: 1950563752}
+  fireEffect: {fileID: 0}
+  bulletForce: 4
 --- !u!1 &1758680733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,8 +1442,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.1, y: 0.2, z: 0.27}
-  m_Center: {x: 0, y: 0.01, z: 0.07}
+  m_Size: {x: 0.1, y: 0.17405732, z: 0.2067306}
+  m_Center: {x: 0, y: 0.0216669, z: 0.060221434}
 --- !u!1 &1851063831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1471,7 +1500,7 @@ Transform:
   m_GameObject: {fileID: 1950563751}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.063, z: 0.1725}
+  m_LocalPosition: {x: 0, y: 0.063, z: 0.2021}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
