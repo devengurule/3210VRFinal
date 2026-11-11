@@ -16,6 +16,6 @@ public class GunFireScript : MonoBehaviour
         bullet.transform.position = bulletSpawnPoint.position;
         bullet.GetComponent<Rigidbody>().AddForce(bulletSpawnPoint.forward * bulletForce, ForceMode.Impulse);
 
-        //fireEffect.Play();
+        if (fireEffect != null) fireEffect.Play();
     }
 }
