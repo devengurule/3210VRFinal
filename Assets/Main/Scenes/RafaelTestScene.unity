@@ -4019,7 +4019,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c478f9e0404b142b032f1ae52a4ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RandomlyGenerateDecal
-  decalPrefab: {fileID: 2217710393310051403, guid: ec4e36c086f657147bb96f4a0df55510, type: 3}
+  decalPrefab: {fileID: 6777055937522922702, guid: 18683eb25f278a64789d75f7868751e6, type: 3}
+  decalPrefab2: {fileID: 2217710393310051403, guid: ec4e36c086f657147bb96f4a0df55510, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
