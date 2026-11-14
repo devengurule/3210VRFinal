@@ -3,6 +3,7 @@ using UnityEngine;
 public class RandomlyGenerateDecal : MonoBehaviour
 {
     [Header("Assets")]
+    [SerializeField] private BiteMap biteMap;
     [SerializeField] private GameObject decalPrefab;
     [SerializeField] private GameObject decalPrefab2;
 
@@ -12,9 +13,17 @@ public class RandomlyGenerateDecal : MonoBehaviour
 
     private void Start()
     {
-        mesh = GetComponent<MeshFilter>().mesh;
-        vertices = mesh.vertices;
-        normals = mesh.normals;
+        if (biteMap == null)
+        {
+            mesh = GetComponent<MeshFilter>().mesh;
+            vertices = mesh.vertices;
+            normals = mesh.normals;
+        }
+        else
+        {
+            vertices = biteMap.MapVectices;
+            normals = biteMap.MapNormals;
+        }
 
         RandomizeChosenVertex();
         RandomizeChosenVertex();

@@ -45,10 +45,10 @@ public class GenerateBiteMap
             if (group[i].TryGetComponent<MeshFilter>(out MeshFilter m))
             {
                 //Use method to set SO's vertex array
-                biteMap.MapVectices = ReturnValidGroup(m.mesh.vertices, validIndeces);
+                biteMap.MapVectices = ReturnValidGroup(m.sharedMesh.vertices, validIndeces);
 
                 //Use method to set SO's normalArray
-                biteMap.MapNormals = ReturnValidGroup(m.mesh.normals, validIndeces);
+                biteMap.MapNormals = ReturnValidGroup(m.sharedMesh.normals, validIndeces);
             }
 
             //Add SO to Assets
@@ -66,12 +66,12 @@ public class GenerateBiteMap
         if (target.TryGetComponent<MeshFilter>(out MeshFilter m))
         {
             Collider[] c = target.GetComponents<Collider>();
-            for (int i = 0; i < m.mesh.vertexCount; i++)
+            for (int i = 0; i < m.sharedMesh.vertexCount; i++)
             {
                 valid = true;
                 for (int j = 0; j < c.Length; j++)
                 {
-                    if (c[j].bounds.Contains(m.mesh.vertices[i])) valid = false;
+                    if (c[j].bounds.Contains(target.transform.TransformPoint(m.sharedMesh.vertices[i]))) valid = false;
                 }
 
                 if (valid) validCount++;
@@ -90,12 +90,12 @@ public class GenerateBiteMap
         if (target.TryGetComponent<MeshFilter>(out MeshFilter m))
         {
             Collider[] c = target.GetComponents<Collider>();
-            for (int i = 0; i < m.mesh.vertexCount; i++)
+            for (int i = 0; i < m.sharedMesh.vertexCount; i++)
             {
                 valid = true;
                 for (int j = 0; j < c.Length; j++)
                 {
-                    if (c[j].bounds.Contains(m.mesh.vertices[i])) valid = false;
+                    if (c[j].bounds.Contains(target.transform.TransformPoint(m.sharedMesh.vertices[i]))) valid = false;
                 }
 
                 if (valid)
