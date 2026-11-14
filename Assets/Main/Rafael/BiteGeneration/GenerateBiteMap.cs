@@ -40,12 +40,21 @@ public class GenerateBiteMap
             int[] validIndeces = ReturnValidIndeces(group[i], validCount);
 
             //Create Scriptable Object(SO)
+            BiteMap biteMap = ScriptableObject.CreateInstance<BiteMap>();
 
-            //Use method to set SO's vertex array
+            if (group[i].TryGetComponent<MeshFilter>(out MeshFilter m))
+            {
+                //Use method to set SO's vertex array
+                biteMap.MapVectices = ReturnValidGroup(m.mesh.vertices, validIndeces);
 
-            //Use method to set SO's normalArray
+                //Use method to set SO's normalArray
+                biteMap.MapNormals = ReturnValidGroup(m.mesh.normals, validIndeces);
+            }
 
             //Add SO to Assets
+            EditorUtility.SetDirty(biteMap);
+            AssetDatabase.CreateAsset(biteMap ,"Assets/Main/Rafael/BiteGeneration/" + group[i].name.Replace(" ", "") + "BiteMap.asset");
+            AssetDatabase.SaveAssetIfDirty(biteMap);
         }
     }
 
@@ -100,5 +109,15 @@ public class GenerateBiteMap
         return validIndeces;
     }
 
-    //private static Vector3[] ReturnValidGroup(Vector3[] arrayToWalk, int[] indeces) { }
+    private static Vector3[] ReturnValidGroup(Vector3[] arrayToWalk, int[] indeces)
+    {
+        Vector3[] validGroup = new Vector3[indeces.Length];
+
+        for (int i = 0; i < indeces.Length; i++)
+        {
+            validGroup[i] = arrayToWalk[indeces[i]];
+        }
+
+        return validGroup;
+    }
 }
