@@ -2,20 +2,30 @@ using UnityEngine;
 
 public class RandomlyGenerateDecal : MonoBehaviour
 {
-    [Header("Assets")]
+    [Header("Highly Recommended")]
     [SerializeField] private BiteMap biteMap;
+    [SerializeField] private GameObject skelPrefab;
+
+    [Header("Required")]
+    [SerializeField] private Mesh mesh;
     [SerializeField] private GameObject decalPrefab;
-    [SerializeField] private GameObject decalPrefab2;
+
+    [Header("Testing")]
+    [SerializeField] private GameObject markPointPrefab;
 
     private Vector3[] vertices;
     private Vector3[] normals;
-    private Mesh mesh;
 
     private void Start()
     {
+        if (mesh == null || decalPrefab == null)
+        {
+            Debug.LogError("REQUIRED VARIABLE MISSING IN " + gameObject.name);
+            return;
+        }
+
         if (biteMap == null)
         {
-            mesh = GetComponent<MeshFilter>().mesh;
             vertices = mesh.vertices;
             normals = mesh.normals;
         }
@@ -38,13 +48,43 @@ public class RandomlyGenerateDecal : MonoBehaviour
         Vector3 chosenVertex = vertices[rand];
         Vector3 chosenNormal = normals[rand];
         chosenVertex = gameObject.transform.TransformPoint(chosenVertex);
-        Debug.Log(chosenVertex.ToString());
+        //Debug.Log(chosenVertex.ToString());
 
-        GameObject decal = Instantiate(decalPrefab, transform);
+        Transform t = gameObject.transform;
+        if (skelPrefab != null) t = FindNearestBoneTransform(chosenVertex);
+
+        GameObject decal = Instantiate(decalPrefab, t);
         decal.transform.position = chosenVertex + chosenNormal.normalized * 0.1f;
         decal.transform.LookAt(chosenVertex);
 
-        GameObject test = Instantiate(decalPrefab2, null);
+        //For testing purposes - marks the specific vertex that was generated
+        if (markPointPrefab == null) return;
+        GameObject test = Instantiate(markPointPrefab, t);
         test.transform.position = chosenVertex;
+    }
+
+    private Transform FindNearestBoneTransform(Vector3 vertex)
+    {
+        Transform closestBone = CheckBoneRecursive(skelPrefab.transform, null, float.PositiveInfinity, vertex);
+
+        return closestBone;
+    }
+
+    private Transform CheckBoneRecursive(Transform boneToCheck, Transform closestBone, float closestDist, Vector3 point)
+    {
+        if (Vector3.Distance(boneToCheck.position, point) < closestDist)
+        {
+            closestBone = boneToCheck;
+            closestDist = Vector3.Distance(closestBone.position, point);
+        }
+
+        for (int i = 0; i < boneToCheck.childCount; i++)
+        {
+            if (boneToCheck.GetChild(i).gameObject.GetComponents<Component>().Length > 1) continue;
+            closestBone = CheckBoneRecursive(boneToCheck.GetChild(i), closestBone, closestDist, point);
+            closestDist = Vector3.Distance(closestBone.position, point);
+        }
+
+        return closestBone;
     }
 }
