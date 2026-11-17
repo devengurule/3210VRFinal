@@ -74,9 +74,8 @@ public class RevealScanner : MonoBehaviour
                 return;
             }
 
-            
+
             activeRenderer = detectedRenderer;
-            Debug.Log(activeRenderer);
             UsingScanner();
         }
         else
