@@ -6,24 +6,28 @@ Shader "Custom/SG_Scanner"
         [MainColor] _BaseColor("Base Color", Color) = (1, 1, 1, 1)
         [MainTexture] _BaseMap("Base Map", 2D) = "white" {}
 
+        _Opacity("Object Opacity", Range(0, 1)) = 1
+
         _ScannerPosition("Scanner Position", Vector) = (0, 0, 0, 0)
         _Radius("Scanner Radius", Float) = 1.5
         _Softness("Scanner Softness", Float) = 0.25
+
+        [Toggle] _UseClip("Use Opaque Cutout", Float) = 0
     }
 
     SubShader
     {
         Tags
         {
-            "RenderType" = "Transparent"
             "RenderPipeline" = "UniversalPipeline"
+            "RenderType" = "Transparent"
             "Queue" = "Transparent"
         }
 
         Pass
         {
             Blend SrcAlpha OneMinusSrcAlpha
-            ZWrite Off
+            ZWrite On
             Cull Off
 
             HLSLPROGRAM
@@ -54,9 +58,13 @@ Shader "Custom/SG_Scanner"
                 half4 _BaseColor;
                 float4 _BaseMap_ST;
 
+                float _Opacity;
+
                 float4 _ScannerPosition;
                 float _Radius;
                 float _Softness;
+
+                float _UseClip;
 
             CBUFFER_END
 
@@ -83,30 +91,42 @@ Shader "Custom/SG_Scanner"
                     IN.uv
                 ) * _BaseColor;
 
-                // Calculate world-space distance from scanner.
+                // Apply overall object opacity.
+                color.a *= _Opacity;
+
+                // Calculate distance from scanner.
                 float distanceToScanner = distance(
                     IN.positionWS,
                     _ScannerPosition.xyz
                 );
 
-                // Calculate inner and outer radius.
+                // Calculate scanner transition.
                 float innerRadius = max(
                     0.0,
                     _Radius - _Softness
                 );
 
-                float outerRadius = _Radius + _Softness;
+                float outerRadius = max(
+                    _Radius + _Softness,
+                    innerRadius + 0.001
+                );
 
-                // Inside the scanner radius = invisible.
-                // Outside the scanner radius = visible.
+                // Outside = visible.
+                // Inside = invisible.
                 float visibility = smoothstep(
                     innerRadius,
-                    max(outerRadius, innerRadius + 0.001),
+                    outerRadius,
                     distanceToScanner
                 );
 
-                // Apply visibility to alpha.
                 color.a *= visibility;
+
+                // Optional opaque cutout mode.
+                if (_UseClip > 0.5)
+                {
+                    clip(color.a - 0.5);
+                    color.a = 1;
+                }
 
                 return color;
             }
