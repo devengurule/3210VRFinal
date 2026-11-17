@@ -4879,7 +4879,7 @@ SkinnedMeshRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 3
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 8748892135801146194, guid: d407ae2b57abd91438445e40751cb7b5, type: 3}

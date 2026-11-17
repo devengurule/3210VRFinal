@@ -54,7 +54,7 @@ public class RandomlyGenerateDecal : MonoBehaviour
         if (skelPrefab != null) t = FindNearestBoneTransform(chosenVertex);
 
         GameObject decal = Instantiate(decalPrefab, t);
-        decal.transform.position = chosenVertex + chosenNormal.normalized * 0.1f;
+        decal.transform.position = chosenVertex + chosenNormal.normalized * 0.03f;
         decal.transform.LookAt(chosenVertex);
 
         //For testing purposes - marks the specific vertex that was generated
