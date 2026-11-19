@@ -112,3 +112,9 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Unity XR generated assets
+**/Reticle_Torus*
+**/UniversalController*
+**/DefaultMaterial_AO*
+**/*TunnelingVignetteHemisphere*
