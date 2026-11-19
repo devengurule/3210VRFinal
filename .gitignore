@@ -23,7 +23,7 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
-**/ProjectSettings/Packages/com.unity.probuilder/Settings.json
+/ProjectSettings/Packages/com.unity.probuilder/Settings.json
 **/XRDeviceSimulatorSettings.asset
 
 
