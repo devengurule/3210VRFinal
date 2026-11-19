@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class RevealScanner : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class RevealScanner : MonoBehaviour
 
     private void DetectingObject()
     {
+
         if (target == null)
         {
             ClearPreviousRenderer();
@@ -52,16 +54,17 @@ public class RevealScanner : MonoBehaviour
             layerMask,
             queryTriggerInteraction))
         {
+
             if (!string.IsNullOrEmpty(hitObject) &&
-                hit.collider.gameObject.tag != hitObject)
+                  hit.collider.gameObject.tag != hitObject)
             {
-                ClearPreviousRenderer();
+                UsingScanner();
                 return;
             }
 
+            ClearPreviousRenderer();
             Renderer detectedRenderer =
                 hit.collider.GetComponent<Renderer>();
-
             if (detectedRenderer == null)
             {
                 detectedRenderer =
@@ -80,7 +83,7 @@ public class RevealScanner : MonoBehaviour
         }
         else
         {
-            ClearPreviousRenderer();
+            
         }
     }
 
@@ -119,11 +122,11 @@ public class RevealScanner : MonoBehaviour
         if (activeRenderer == null)
             return;
 
+       
         // this is just reseting the visibility by setting the radius to zero.
         activeRenderer.GetPropertyBlock(scannerBlock);
         scannerBlock.SetFloat(radiusProperty, 0f);
         activeRenderer.SetPropertyBlock(scannerBlock);
-
         activeRenderer = null;
     }
 

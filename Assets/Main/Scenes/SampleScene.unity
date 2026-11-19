@@ -17925,6 +17925,10 @@ PrefabInstance:
       propertyPath: softness
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 2136703714722584387, guid: 18177eb63774e4a49bec58b5fa8cba86, type: 3}
+      propertyPath: castRadius
+      value: 4.26
+      objectReference: {fileID: 0}
     - target: {fileID: 8317340843985394061, guid: 18177eb63774e4a49bec58b5fa8cba86, type: 3}
       propertyPath: m_Name
       value: Scanner
