@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class TimerScript : MonoBehaviour
 {
-    public static Action<string> AnnounceTime;
+    public static Action<string> AnnounceTimeDigital;
+    public static Action<float> AnnounceTimeAnalog;
     public static Action AnnounceTimeCompletion;
 
     [Header("Required")]
@@ -13,6 +14,8 @@ public class TimerScript : MonoBehaviour
     [SerializeField] private bool displayInUniverse;
     [SerializeField] private int dayStartInMinutes;
     [SerializeField] private int dayEndInMinutes;
+    [SerializeField] private bool returnDigital = true;
+    [SerializeField] private bool returnAnalog = false;
 
     private float currentTime = 0;
     private float startTime;
@@ -88,7 +91,16 @@ public class TimerScript : MonoBehaviour
 
         try
         {
-            AnnounceTime.Invoke(FormatInUniverse(universeTime));
+            if (returnDigital) AnnounceTimeDigital.Invoke(FormatInUniverse(universeTime));
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Problem in the Timer Script. Message: " + e.Message);
+        }
+
+        try
+        {
+            if (returnAnalog) AnnounceTimeAnalog.Invoke(FormatIntoDegrees(universeTime));
         }
         catch (Exception e)
         {
@@ -102,5 +114,10 @@ public class TimerScript : MonoBehaviour
         int rightSide = Mathf.FloorToInt(timeToFormat % 60);
 
         return (leftSide.ToString("D2") + ":" + rightSide.ToString("D2"));
+    }
+
+    private float FormatIntoDegrees(int timeToFormat)
+    {
+        return (720 * (timeToFormat / 1440));
     }
 }

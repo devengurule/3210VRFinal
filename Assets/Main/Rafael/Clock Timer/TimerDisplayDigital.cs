@@ -1,18 +1,18 @@
 using TMPro;
 using UnityEngine;
 
-public class TimerDisplay : MonoBehaviour
+public class TimerDisplayDigital : MonoBehaviour
 {
     private TextMeshProUGUI tmPro;
 
     private void OnEnable()
     {
-        TimerScript.AnnounceTime += UpdateText;
+        TimerScript.AnnounceTimeDigital += UpdateText;
     }
 
     private void OnDisable()
     {
-        TimerScript.AnnounceTime -= UpdateText;
+        TimerScript.AnnounceTimeDigital -= UpdateText;
     }
 
     private void Start()

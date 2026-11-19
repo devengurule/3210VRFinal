@@ -353,10 +353,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41516ad9d80038f43bd720727a9135f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimerScript
-  totalTimeInSecs: 10
+  totalTimeInSecs: 240
   displayInUniverse: 1
   dayStartInMinutes: 60
   dayEndInMinutes: 300
+  returnDigital: 1
+  returnAnalog: 0
 --- !u!4 &351373031
 Transform:
   m_ObjectHideFlags: 0
@@ -1886,6 +1888,7 @@ GameObject:
   - component: {fileID: 1693607977}
   - component: {fileID: 1693607976}
   - component: {fileID: 1693607978}
+  - component: {fileID: 1693607979}
   m_Layer: 5
   m_Name: TimerDisplayText
   m_TagString: Untagged
@@ -2024,6 +2027,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74844aaaa1240a14ca8871a53ed2f90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimerDisplay
+  tmPro: {fileID: 0}
+--- !u!114 &1693607979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693607974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55cffabffed4a54d82572456a6a6265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimerDisplayDigital
 --- !u!1 &1758680733
 GameObject:
   m_ObjectHideFlags: 0
