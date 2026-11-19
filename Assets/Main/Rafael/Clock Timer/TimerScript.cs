@@ -1,7 +1,11 @@
+using System;
 using UnityEngine;
 
 public class TimerScript : MonoBehaviour
 {
+    public static Action<string> AnnounceTime;
+    public static Action AnnounceTimeCompletion;
+
     [Header("Required")]
     [SerializeField] private float totalTimeInSecs;
 
@@ -59,6 +63,15 @@ public class TimerScript : MonoBehaviour
     {
         Debug.Log("Time!");
         StopTimer();
+
+        try
+        {
+            AnnounceTimeCompletion.Invoke();
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Problem in the Timer Script. Message: " + e.Message);
+        }
     }    
 
     private void CalculateMultiplier()
@@ -72,7 +85,15 @@ public class TimerScript : MonoBehaviour
         float universeMinutesPassed = inUniverseTimeMultiplier * currentTime;
 
         int universeTime = dayStartInMinutes + Mathf.FloorToInt(universeMinutesPassed);
-        Debug.Log(FormatInUniverse(universeTime));
+
+        try
+        {
+            AnnounceTime.Invoke(FormatInUniverse(universeTime));
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Problem in the Timer Script. Message: " + e.Message);
+        }
     }
 
     private string FormatInUniverse(int timeToFormat)
