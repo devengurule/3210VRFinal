@@ -6,7 +6,6 @@ public class DropOffItems : MonoBehaviour
     [SerializeField] private Transform spawnLocation;
     [SerializeField] private GameObject spawnItem;
     [SerializeField] private ScannableItem[] scannableItems;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void SpawnItem()
     {
         ScannableItem currentScanItem = scannableItems[Random.Range(0, scannableItems.Length)];
