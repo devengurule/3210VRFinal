@@ -146,7 +146,7 @@ Transform:
   m_GameObject: {fileID: 278623019}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7058518, z: -0, w: 0.7083596}
-  m_LocalPosition: {x: 2.120517, y: 0, z: -4.1989784}
+  m_LocalPosition: {x: -0.64, y: 0, z: -7.48}
   m_LocalScale: {x: 0.38, y: 0.38, z: 0.38}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1889,6 +1889,7 @@ GameObject:
   - component: {fileID: 1693607976}
   - component: {fileID: 1693607978}
   - component: {fileID: 1693607979}
+  - component: {fileID: 1693607980}
   m_Layer: 5
   m_Name: TimerDisplayText
   m_TagString: Untagged
@@ -2027,8 +2028,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74844aaaa1240a14ca8871a53ed2f90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimerDisplay
-  tmPro: {fileID: 0}
 --- !u!114 &1693607979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693607974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55cffabffed4a54d82572456a6a6265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimerDisplayDigital
+--- !u!114 &1693607980
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
