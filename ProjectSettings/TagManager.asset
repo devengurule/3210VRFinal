@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Anchor
   - Targeted
+  - Item
   layers:
   - Default
   - TransparentFX
