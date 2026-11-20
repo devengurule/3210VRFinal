@@ -26,4 +26,9 @@ public class CountingScanned : MonoBehaviour, I_ScanObject
 
         textObject.text = currentName + ": " + currentValue + " total: " + totalValue;
     }
+
+    public void SendingSpawnedValues(int iP, string iN, Mesh iM)
+    {
+     
+    }
 }

@@ -3,15 +3,17 @@ using UnityEngine;
 
 public class ItemType : MonoBehaviour,I_ScanObject
 {
-    public string itemName;
-    public int itemPrice;
+    private string itemName;
+    private int itemPrice;
     List<I_ScanObject> m_AllScannables = new List<I_ScanObject>();
+    [SerializeField] private MeshCollider objectCollider;
+    [SerializeField] private MeshFilter objectFilter;
     void Start()
     {
         MonoBehaviour[] allScripts = FindObjectsOfType<MonoBehaviour>();
         for (int i = 0; i < allScripts.Length; i++)
         {
-            if (allScripts[i] is I_ScanObject)
+            if (allScripts[i] is I_ScanObject && allScripts[i] != this)
                 m_AllScannables.Add(allScripts[i] as I_ScanObject);
         }
     }
@@ -28,6 +30,15 @@ public class ItemType : MonoBehaviour,I_ScanObject
     }
     public void SendingScannedValues(int iP, string iN)
     {
+     
+    }
 
+    public void SendingSpawnedValues(int iP, string iN, Mesh iM)
+    {
+        Debug.Log("stuff scanned");
+        itemName = iN;
+        itemPrice = iP;
+        objectCollider.sharedMesh = iM;
+        objectFilter.mesh = iM;
     }
 }

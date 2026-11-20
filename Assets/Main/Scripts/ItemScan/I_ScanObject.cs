@@ -5,4 +5,6 @@ public interface I_ScanObject
     public void ObjectScanned();
 
     public void SendingScannedValues(int iP, string iN);
+
+    public void SendingSpawnedValues(int iP, string iN, Mesh iM);
 }

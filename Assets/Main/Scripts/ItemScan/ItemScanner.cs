@@ -23,11 +23,12 @@ public class ItemScanner : MonoBehaviour
        layerMask,
        queryTriggerInteraction))
         {
-            if (!string.IsNullOrEmpty(hitObject) &&
+            Debug.Log("scanned");
+            if (string.IsNullOrEmpty(hitObject) ||
                      hit.collider.gameObject.tag != hitObject)
                 return;
 
-            I_ScanObject m_AllScanables = hit.collider.gameObject.GetComponent<I_ScanObject>();
+            I_ScanObject m_AllScanables = hit.collider.gameObject.GetComponentInChildren<I_ScanObject>();
             m_AllScanables.ObjectScanned();
 
         }

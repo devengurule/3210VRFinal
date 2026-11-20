@@ -5,5 +5,5 @@ public class ScannableItem : ScriptableObject
 {
     public string itemName;
     public int itemPrice;
-    public GameObject itemPrefab;
+    public Mesh itemMesh;
 }
