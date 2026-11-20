@@ -3,6 +3,7 @@ using UnityEditor;
 
 public class GenerateBiteMap
 {
+    #if UNITY_EDITOR
     [MenuItem("Tools/GenerateBiteMap", true)]
     public static bool SelectionValidation()
     {
@@ -120,4 +121,5 @@ public class GenerateBiteMap
 
         return validGroup;
     }
+    #endif
 }
