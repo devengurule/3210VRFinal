@@ -7,6 +7,16 @@ public class ShutterDistributionScript : MonoBehaviour
 
     private Transform[] bars;
 
+    private void OnEnable()
+    {
+        FenceMoveScript.EventMove += DistributeShutter;
+    }
+
+    private void OnDisable()
+    {
+        FenceMoveScript.EventMove -= DistributeShutter;
+    }
+
     private void Start()
     {
         bars = new Transform[transform.childCount];
@@ -21,11 +31,11 @@ public class ShutterDistributionScript : MonoBehaviour
 
     private void DistributeShutter()
     {
-        Vector3 increment = (topOfFence.position - bottomOfFence.position) / bars.Length;
+        Vector3 increment = (topOfFence.position - bottomOfFence.position) / (bars.Length);
 
         for (int i = 0; i < bars.Length; i++)
         {
-            bars[i].localPosition = new Vector3(0, bottomOfFence.position.y + (increment.y * i), 0);
+            bars[i].localPosition = new Vector3(0, (increment.y * i), 0);
         }
     }
 }

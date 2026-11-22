@@ -2,47 +2,24 @@ using UnityEngine;
 
 public class FenceMoveScript : MonoBehaviour
 {
-    [SerializeField] private Transform topAnchor;
-    [SerializeField] private Transform bottomAnchor;
-    [SerializeField] private Transform floorAnchor;
-    [SerializeField] private float speed;
+    public static event System.Action EventMove;
 
-    [SerializeField] private float topOffset;
-    [SerializeField] private float bottomOffset;
-    private bool isRaising = false;
-    private bool isLowering = false;
-    private Vector3 modifiablePos;
-
-    private void Start()
-    {
-        modifiablePos = transform.position;
-        topOffset = bottomAnchor.position.y - topAnchor.position.y;
-        bottomOffset = bottomAnchor.position.y - floorAnchor.position.y;
-    }
-
+    [SerializeField] private Transform moveableAnchor;
+    
+    private bool isMoving = false;
     private void FixedUpdate()
     {
-        if (!isRaising || !isLowering) return;
+        if (!isMoving) return;
 
-        if (isLowering) modifiablePos.y = Mathf.Clamp(modifiablePos.y - (speed * Time.deltaTime), topOffset, bottomOffset);
-        if (isRaising) modifiablePos.y = Mathf.Clamp(modifiablePos.y + (speed * Time.deltaTime), topOffset, bottomOffset);
+        try
+        {
+            EventMove.Invoke();
+        }
+        catch { }
     }
 
-    private void StopMovement()
+    public void SetMovement(bool setting)
     {
-        isRaising = false;
-        isLowering = false;
-    }
-
-    private void RaiseFence()
-    {
-        StopMovement();
-        isRaising = true;
-    }
-
-    private void DropFence()
-    {
-        StopMovement();
-        isLowering = true;
+        isMoving = setting;
     }
 }
