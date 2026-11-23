@@ -9,12 +9,12 @@ public class ShutterDistributionScript : MonoBehaviour
 
     private void OnEnable()
     {
-        FenceMoveScript.EventMove += DistributeShutter;
+        LowerFencePart.FenceMoving += DistributeShutter;
     }
 
     private void OnDisable()
     {
-        FenceMoveScript.EventMove -= DistributeShutter;
+        LowerFencePart.FenceMoving -= DistributeShutter;
     }
 
     private void Start()

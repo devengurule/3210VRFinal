@@ -10,16 +10,18 @@ public class ShutterVeticalsScaleScript : MonoBehaviour
     private void Start()
     {
         distanceForScale1 = (topAnchor.position.y - transform.position.y) / transform.localScale.y;
+
+        ScaleVerticals();
     }
 
     private void OnEnable()
     {
-        FenceMoveScript.EventMove += ScaleVerticals;
+        LowerFencePart.FenceMoving += ScaleVerticals;
     }
 
     private void OnDisable()
     {
-        FenceMoveScript.EventMove -= ScaleVerticals;
+        LowerFencePart.FenceMoving -= ScaleVerticals;
     }
 
     private void ScaleVerticals()
