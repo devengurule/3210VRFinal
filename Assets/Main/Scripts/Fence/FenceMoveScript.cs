@@ -19,9 +19,14 @@ public class FenceMoveScript : MonoBehaviour
         highestPoint.y = 1.7f;
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         if (!isMoving) return;
+
+        LimitPos();
+
+        float l = LimitPos();
+        //if (l == originPoint.y || l == highestPoint.y) return;
 
         try
         {
@@ -30,17 +35,19 @@ public class FenceMoveScript : MonoBehaviour
         catch { }
     }
 
-    private void LimitPos()
+    private float LimitPos()
     {
         Vector3 pos = moveableAnchor.position; 
         pos.y = Mathf.Clamp(moveableAnchor.position.y, originPoint.y, highestPoint.y);
         moveableAnchor.position = pos;
+
+        return pos.y;
     }
 
     public void SetMovement(bool setting)
     {
         isMoving = setting;
-        LimitPos();
+        float l = LimitPos();
         EventMove.Invoke();
     }
 }
