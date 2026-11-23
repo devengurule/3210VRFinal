@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.XR.CoreUtils;
@@ -34,6 +34,10 @@ public class MonitorController : MonoBehaviour
     [SerializeField] private TMP_Text totalAmountPreview;
     [SerializeField] private int MaxBattery;
     [SerializeField] private int MaxBullet;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject batteryPrefab;
+    [SerializeField] private Transform spawnPosition;
+    [SerializeField] private float spawnOffset;
 
     private enum CurrentItem
     {
@@ -231,7 +235,31 @@ public class MonitorController : MonoBehaviour
     {
         if (mode != MonitorMode.shop) return;
 
-        Debug.Log("Did the purchase");
+        StartCoroutine(SpawnItems());
+    }
+
+    private IEnumerator SpawnItems()
+    {
+        // Spawn Batteries
+        for (int i = 0; i < totalBatteryItems; i++)
+        {
+            Vector3 randomOffset = new Vector3(Random.Range(-spawnOffset, spawnOffset), 0f, Random.Range(-spawnOffset, spawnOffset));
+
+            Instantiate(batteryPrefab, spawnPosition.position + randomOffset, Quaternion.identity);
+
+            yield return null;
+        }
+
+        // Spawn Bullets
+        for (int i = 0; i < totalBulletItems; i++)
+        {
+            Vector3 randomOffset = new Vector3(Random.Range(-spawnOffset, spawnOffset), 0f, Random.Range(-spawnOffset, spawnOffset));
+            
+            Instantiate(bulletPrefab, spawnPosition.position + randomOffset, Quaternion.identity);
+
+            yield return null;
+        }
+
         ClearPurchase();
     }
 }
