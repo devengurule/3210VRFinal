@@ -4,7 +4,8 @@ using UnityEngine;
 public class ItemType : MonoBehaviour, I_ScanObject
 {
     private string itemName;
-    private int itemPrice;
+    private int itemPrice = 0;
+    private bool itemScanned = false;
 
     private List<I_ScanObject> m_AllScannables = new List<I_ScanObject>();
 
@@ -26,10 +27,12 @@ public class ItemType : MonoBehaviour, I_ScanObject
     // This sends this item's info to all registered scanners.
     public void ObjectScanned()
     {
+        if (itemScanned) return;
         for (int i = 0; i < m_AllScannables.Count; i++)
         {
             m_AllScannables[i].SendingScannedValues(itemPrice, itemName);
         }
+        itemScanned = true;
     }
 
     public void SendingScannedValues(int iP, string iN)
@@ -40,6 +43,7 @@ public class ItemType : MonoBehaviour, I_ScanObject
     // This updates the item's info and mesh when spawned.
     public void SendingSpawnedValues(int iP, string iN, Mesh iM)
     {
+        if (itemScanned) return;
         Debug.Log("stuff scanned");
 
         itemName = iN;
@@ -47,5 +51,6 @@ public class ItemType : MonoBehaviour, I_ScanObject
 
         objectCollider.sharedMesh = iM;
         objectFilter.mesh = iM;
+        
     }
 }

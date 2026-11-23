@@ -12,3 +12,10 @@ public interface I_ScanObject
     // This sends the object's info when spawned, including its mesh.
     public void SendingSpawnedValues(int iP, string iN, Mesh iM);
 }
+
+public interface I_Items
+{
+
+    public void ItemsSpawned(int iAmount);
+    public void AllItemsScanned();
+}

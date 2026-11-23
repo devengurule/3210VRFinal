@@ -1,11 +1,12 @@
 using TMPro;
 using UnityEngine;
 
-public class CountingScanned : MonoBehaviour, I_ScanObject
+public class CountingScanned : MonoBehaviour, I_ScanObject, I_Items
 {
     int currentValue = 0;
     int totalValue = 0;
     string currentName;
+
 
     TextMeshPro textObject;
 
@@ -34,4 +35,25 @@ public class CountingScanned : MonoBehaviour, I_ScanObject
     {
 
     }
+
+    public void OrderCompleted()
+    {
+        currentValue = 0;
+        totalValue = 0;
+        currentName = "";
+        textObject.text = "Order Finished";
+    }
+
+    // keep empty
+    public void ItemsSpawned(int iAmount)
+    {
+        
+    }
+
+    public void AllItemsScanned()
+    {
+        OrderCompleted();
+    }
+
+
 }
