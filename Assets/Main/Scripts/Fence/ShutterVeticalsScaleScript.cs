@@ -12,18 +12,18 @@ public class ShutterVeticalsScaleScript : MonoBehaviour
         distanceForScale1 = (topAnchor.position.y - transform.position.y) / transform.localScale.y;
     }
 
-    private void FixedUpdate()
+    private void OnEnable()
     {
-        if (scale) ScaleVerticals();
+        FenceMoveScript.EventMove += ScaleVerticals;
+    }
+
+    private void OnDisable()
+    {
+        FenceMoveScript.EventMove -= ScaleVerticals;
     }
 
     private void ScaleVerticals()
     {
         transform.localScale = new Vector3(1, (topAnchor.position.y - transform.position.y) / distanceForScale1, 1);
-    }
-
-    public void SetScale(bool setting)
-    {
-        scale = setting;
     }
 }
