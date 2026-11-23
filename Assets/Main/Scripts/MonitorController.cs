@@ -41,6 +41,12 @@ public class MonitorController : MonoBehaviour
         battery
     }
 
+    private enum MonitorMode
+    {
+        camera,
+        shop
+    }
+
     private CurrentItem currentItem = CurrentItem.bullet;
     private int totalBatteryItems = 0;
     private int totalBulletItems = 0;
@@ -48,6 +54,7 @@ public class MonitorController : MonoBehaviour
     private const int BATTERY_PRICE = 500;
     private TransitionController transitioner;
     private CameraID currentCamera;
+    private MonitorMode mode;
     private Transform currentPlayerTransform;
 
     private void Start()
@@ -63,6 +70,8 @@ public class MonitorController : MonoBehaviour
 
         bulletHighlight.SetActive(currentItem == CurrentItem.bullet);
         batteryHighlight.SetActive(currentItem == CurrentItem.battery);
+
+        mode = MonitorMode.shop;
 
         // Disable the return button since the player starts at the register
         returnButton.SetActive(false);
@@ -102,6 +111,8 @@ public class MonitorController : MonoBehaviour
     }
     public void MoveButtonPressed()
     {
+        if (mode != MonitorMode.camera) return;
+
         // Teleport to where ever the current camera is looking at
         TeleportPlayerSequence(teleportTransform[currentCamera]);
     }
@@ -218,6 +229,8 @@ public class MonitorController : MonoBehaviour
 
     public void CompletePurchase()
     {
+        if (mode != MonitorMode.shop) return;
+
         Debug.Log("Did the purchase");
         ClearPurchase();
     }
