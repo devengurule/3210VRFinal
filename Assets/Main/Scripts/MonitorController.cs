@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 
@@ -11,27 +12,65 @@ public enum CameraID
     batteryCam
 }
 
+
 public class MonitorController : MonoBehaviour
 {
     [SerializeField] private XROrigin xrorigin;
-    [SerializeField] private MeshRenderer monitor;
+
+    [Header("Camera Stuff")]
+    [SerializeField] private MeshRenderer cameraMonitor;
     [SerializeField] private GameObject returnButton;
     [SerializeField] private Dictionary<CameraID, Material> cameraMaterial;
     [SerializeField] private Dictionary<CameraID, Transform> teleportTransform;
 
+    [Header("Shop Stuff")]
+    [SerializeField] private MeshRenderer shopMonitor;
+    [SerializeField] private GameObject bulletHighlight;
+    [SerializeField] private GameObject batteryHighlight;
+    [SerializeField] private TMP_Text bulletAmountPreview;
+    [SerializeField] private TMP_Text bulletMaxAmountPreview;
+    [SerializeField] private TMP_Text batteryAmountPreview;
+    [SerializeField] private TMP_Text batteryMaxAmountPreview;
+    [SerializeField] private TMP_Text totalAmountPreview;
+    [SerializeField] private int MaxBattery;
+    [SerializeField] private int MaxBullet;
+
+    private enum CurrentItem
+    {
+        bullet,
+        battery
+    }
+
+    private CurrentItem currentItem = CurrentItem.bullet;
+    private int totalBatteryItems = 0;
+    private int totalBulletItems = 0;
+    private const int BULLET_PRICE = 100;
+    private const int BATTERY_PRICE = 500;
     private TransitionController transitioner;
     private CameraID currentCamera;
     private Transform currentPlayerTransform;
 
     private void Start()
     {
+        // Set inital values for the shop
+        bulletMaxAmountPreview.text = MaxBullet.ToString();
+        bulletAmountPreview.text = totalBulletItems.ToString();
+        
+        batteryMaxAmountPreview.text = MaxBattery.ToString();
+        batteryAmountPreview.text = totalBatteryItems.ToString();
+
+        totalAmountPreview.text = UpdateTotal().ToString();
+
+        bulletHighlight.SetActive(currentItem == CurrentItem.bullet);
+        batteryHighlight.SetActive(currentItem == CurrentItem.battery);
+
         // Disable the return button since the player starts at the register
         returnButton.SetActive(false);
 
         transitioner = GameController.instance.transitionController;
 
         // Set the intial monitor to view the register camera
-        monitor.material = cameraMaterial[CameraID.registerCam];
+        cameraMonitor.material = cameraMaterial[CameraID.registerCam];
         currentCamera = CameraID.registerCam;
         currentPlayerTransform = teleportTransform[CameraID.registerCam];
 
@@ -52,7 +91,7 @@ public class MonitorController : MonoBehaviour
     private void MonitorButtonPressed(CameraID id)
     {
         // Switch the monitors material and store the current camera id
-        monitor.material = cameraMaterial[id];
+        cameraMonitor.material = cameraMaterial[id];
         currentCamera = id;
     }
 
@@ -109,5 +148,77 @@ public class MonitorController : MonoBehaviour
 
         // Fade back to reality, there goes gravity
         transitioner.FadeToTargetAlpha(0);
+    }
+
+    private int UpdateTotal()
+    {
+        totalAmountPreview.text = ((totalBatteryItems * BATTERY_PRICE) + (totalBulletItems * BULLET_PRICE)).ToString();
+
+        return (totalBatteryItems * BATTERY_PRICE) + (totalBulletItems * BULLET_PRICE);
+    }
+
+    public void SwitchItem()
+    {
+        bulletHighlight.SetActive(currentItem == CurrentItem.battery);
+        batteryHighlight.SetActive(currentItem == CurrentItem.bullet);
+
+        currentItem = bulletHighlight.activeSelf ? CurrentItem.bullet : CurrentItem.battery;
+    }
+
+    public void AddItem()
+    {
+        if (currentItem == CurrentItem.battery)
+        {
+            if ((totalBatteryItems + 1) > MaxBattery) return;
+
+            totalBatteryItems++;
+            batteryAmountPreview.text = totalBatteryItems.ToString();
+        }
+        else
+        {
+            if ((totalBulletItems + 1) > MaxBullet) return;
+
+            totalBulletItems++;
+            bulletAmountPreview.text = totalBulletItems.ToString();
+        }
+
+        UpdateTotal();
+    }
+
+    public void RemoveItem()
+    {
+        if (currentItem == CurrentItem.battery)
+        {
+            if ((totalBatteryItems - 1) < 0) return;
+
+            totalBatteryItems--;
+            batteryAmountPreview.text = totalBatteryItems.ToString();
+        }
+        else
+        {
+            if ((totalBulletItems - 1) < 0) return;
+
+            totalBulletItems--;
+            bulletAmountPreview.text = totalBulletItems.ToString();
+        }
+
+        UpdateTotal();
+    }
+
+    public void ClearPurchase()
+    {
+        totalBatteryItems = 0;
+        batteryAmountPreview.text = totalBatteryItems.ToString();
+
+        totalBulletItems = 0;
+        bulletAmountPreview.text = totalBulletItems.ToString();
+
+        UpdateTotal();
+    }
+
+    public void CompletePurchase()
+    {
+        Debug.Log("Did the purchase");
+        ClearPurchase();
     }
 }
