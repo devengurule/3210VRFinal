@@ -18204,10 +18204,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 1796533127844193066, guid: 57529fc7d4587b548af2e10f00e13037, type: 3}
-      propertyPath: m_PhysicsLayerMask.m_Bits
-      value: 65
-      objectReference: {fileID: 0}
     - target: {fileID: 1920125782213416630, guid: 57529fc7d4587b548af2e10f00e13037, type: 3}
       propertyPath: m_RenderingLayerMask
       value: 2
@@ -18323,10 +18319,6 @@ PrefabInstance:
     - target: {fileID: 5232523429021587877, guid: 57529fc7d4587b548af2e10f00e13037, type: 3}
       propertyPath: m_Layer
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5785427342365715755, guid: 57529fc7d4587b548af2e10f00e13037, type: 3}
-      propertyPath: m_PhysicsLayerMask.m_Bits
-      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 5853186011541791354, guid: 57529fc7d4587b548af2e10f00e13037, type: 3}
       propertyPath: m_Layer

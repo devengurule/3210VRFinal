@@ -3565,9 +3565,9 @@ MonoBehaviour:
   m_AimTargetObject: {fileID: 0}
   m_PhysicsLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   m_PhysicsTriggerInteraction: 1
-  m_CastRadius: 0.1
+  m_CastRadius: 0.05
 --- !u!114 &3815773814231498334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5638,9 +5638,9 @@ MonoBehaviour:
   m_AimTargetObject: {fileID: 0}
   m_PhysicsLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   m_PhysicsTriggerInteraction: 1
-  m_CastRadius: 0.1
+  m_CastRadius: 0.05
 --- !u!114 &7804013604440882051
 MonoBehaviour:
   m_ObjectHideFlags: 0
